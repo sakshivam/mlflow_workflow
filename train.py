@@ -7,13 +7,6 @@ import numpy as np
 
 epochs, batch_size = reading_terminal_inputs()
 
-# if len(sys.argv) == 3:
-#     epochs = int(sys.argv[1])
-#     batch_size = int(sys.argv[2])
-# else:
-#     epochs = 2
-#     batch_size = 110
-
 """                     MLflow Tracking
 
     MLflow is an open source platform for managing the end-to-end machine learning lifecycle.
