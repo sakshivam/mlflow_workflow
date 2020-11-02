@@ -1,0 +1,10 @@
+name: mlflow_test
+
+conda_env: conda.yaml
+
+entry_points:
+    train:
+        parameters:
+            epoch: {type: str, default: 3}
+            bsize: {type: str, default: 200}
+        command: python train.py --epoch {epoch} --bsize {bsize}
