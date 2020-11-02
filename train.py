@@ -78,6 +78,8 @@ epochs, batch_size = reading_terminal_inputs()
 
     You can run the project:
         mlflow run command-line tool
+        e.g. mlflow run mlflow_workflow --no-conda --experiment-name /experiments_demo_databricks2
+
         mlflow.projects.run() Python API
 
     These APIs also allow submitting the project for remote execution
