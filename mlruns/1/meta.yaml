@@ -1,0 +1,4 @@
+artifact_location: file:///Users/artinmac/Documents/Research/Data7/test_mlflow/mlflow_workflow/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: /experiments_demo_databricks2
