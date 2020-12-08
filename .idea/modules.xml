@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/my_example_mlflow.iml" filepath="$PROJECT_DIR$/.idea/my_example_mlflow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mlflow_tutorial_examples/examples/sklearn_elasticnet_diabetes/osx/.idea/osx.iml" filepath="$PROJECT_DIR$/../mlflow_tutorial_examples/examples/sklearn_elasticnet_diabetes/osx/.idea/osx.iml" />
+    </modules>
+  </component>
+</project>

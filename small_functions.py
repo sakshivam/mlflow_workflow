@@ -4,6 +4,7 @@ from keras.models import Sequential, load_model
 from keras.layers.core import Dense, Dropout, Activation
 import argparse
 
+
 def reading_terminal_inputs():
     parser = argparse.ArgumentParser()
     parser.add_argument("--epoch", help="number of epochs")
@@ -14,7 +15,8 @@ def reading_terminal_inputs():
     epoch = int(args.epoch) if args.epoch else 4
     bsize = int(args.bsize) if args.bsize else 200
 
-    return epoch , bsize
+    return epoch, bsize
+
 
 def loading_data():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
@@ -30,12 +32,11 @@ def loading_data():
     y_test = np_utils.to_categorical(y_test)
     num_classes = y_test.shape[1]
 
-    return (X_train,y_train), (X_test,y_test)
+    return (X_train, y_train), (X_test, y_test)
 
 
 # define baseline model
 def architecture():
-
     model = Sequential()
     model.add(Dense(512, input_shape=(784,)))
     model.add(Activation('relu'))

@@ -91,10 +91,48 @@ epochs, batch_size = reading_terminal_inputs()
         Pass:
         Repeat pass:
 """
-# mlflow.set_tracking_uri("databricks")
-# mlflow.create_experiment(name='/experiments_demo_databricks2') # , artifact_location='dbfs:/artifacts_stuff')
-# mlflow experiment create -n "/exp_simple2" -l <artifcat-location>
-mlflow.set_experiment(experiment_name='/experiments_demo_databricks2')
+
+""" setting the tracking server
+    LOCAL-DISC: saving the runs on a designated uri
+    >> mlflow.set_tracking_uri('file:/home/petra/mlrun_store')
+
+    LOCAL-DATABASE:
+    >> mlflow.set_tracking_uri("sqlite:///mlruns.db")
+
+    REMOTE-DATABASE:
+    >> mlflow.set_tracking_uri("databricks") """
+
+""" Backend store
+    Database (backend-store-uri) needs to be encoded as dialect+driver://username:password@host:port/database.
+    >> mlflow ui  --backend-store-uri <absolute-path-to-mlruns> \
+                  --default-artifact-root <absolute-path-ro-artifacts> \
+                  --host 0.0.0.0
+                  --port 5000
+
+    >> mlflow server --backend-store-uri postgresql://mlflow_developer@localhost/mlflow_db
+                     --default-artifact-root artifacts_postgresql
+                     --host 0.0.0.0 --port 5000
+    Use --backend-store-uri to configure the type of backend storea
+"""
+
+""" postgresql
+        initdb /usr/local/var/postgres
+        pg_ctl -D /usr/local/var/postgres -l logfile start
+"""
+server = "sqlite:///mlruns.db"
+mlflow.set_tracking_uri(server)
+mlflow.set_registry_uri(server)
+
+client = mlflow.tracking.MlflowClient(tracking_uri=server, registry_uri=server) #  tracking_uri="sqlite:///mlruns.db" , registry_uri="sqlite:///mlruns.db"
+
+
+""" creating experiment """
+experiment_name = '/exp_backend_model_registry_3'
+client.create_experiment(name=experiment_name) # , artifact_location='dbfs:/artifacts_stuff')
+
+""" setting the experiment
+    >> mlflow experiment create -n "/exp_simple2" -l <artifcat-location> """
+mlflow.set_experiment(experiment_name=experiment_name)
 
 mlflow.keras.autolog()
 
@@ -103,8 +141,7 @@ if __name__ == "__main__":
 
     (train_images, train_labels), (test_images, test_labels) = loading_data()
 
-    # for epochs in [2, 3, 4]:
-    with mlflow.start_run() as f:  #experiment_id='7'
+    with mlflow.start_run(run_name='run_name_test') as f:  # experiment_id='7'
         history = model.fit(train_images, train_labels, epochs=epochs, batch_size=batch_size,
                             validation_data=(test_images, test_labels))
 
@@ -112,10 +149,8 @@ if __name__ == "__main__":
         print('Accuracy:', test_acc)
         print('Loss: ', test_loss)
 
-        preds = model.predict(test_images)
-        predicted_classes = np.argmax(preds, axis=1)
-
-        # model.save('model.h5')
+        prediction = model.predict(test_images)
+        predicted_classes = np.argmax(prediction, axis=1)
 
         mlflow.log_param("epochs", epochs)
         mlflow.log_param("batch_size", batch_size)
@@ -130,6 +165,6 @@ if __name__ == "__main__":
         #
         # mlflow.log_artifact('predictions.txt')
 
-        print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
+        client.create_registered_model(description='first registered model', name=experiment_name)
 
-        # mlflow.end_run()
+        print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
