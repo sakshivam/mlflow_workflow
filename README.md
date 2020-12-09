@@ -137,3 +137,8 @@ go into a specific database & a specific user:
     psql -d mlflow_db -U mlflow_user
 show tables within the database
     \d+
+
+# sftp
+source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
+
+sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store

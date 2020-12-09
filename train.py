@@ -18,17 +18,18 @@ dialect_driver = 'postgresql'
     server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' """
 
 server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' # :{port}
-
 # server   = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store"
 
-artifact = "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store"
+# artifact = server
+# artifact = "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store"
+artifact = 'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store'
 
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 """ creating experiment """
-experiment_name = '/experiment_postgres_local_server_separate_artifact_location'
-# mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
+experiment_name = '/experiment_postgres_local_server_artifact_HPC'
+mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
 
 """ setting the experiment:  mlflow experiment create -n "/exp_simple2" -l <artifcat-location> """
 mlflow.set_experiment(experiment_name=experiment_name)
