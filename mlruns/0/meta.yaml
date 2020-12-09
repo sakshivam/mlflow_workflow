@@ -1,4 +1,0 @@
-artifact_location: file:///Users/artinmac/Documents/Research/Data7/mlflow/my_example_mlflow/mlruns/0
-experiment_id: '0'
-lifecycle_stage: active
-name: /exp_backend_model_registry
