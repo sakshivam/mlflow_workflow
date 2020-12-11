@@ -148,21 +148,50 @@ show tables within the database
 ## Access to remote server postgres:
 Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection/
 
-### step 1:
-Add your client ip as trusted ip by modifying pg_hba.conf
+### Step 0:
+
+#### Completely purging postgresql
+
+##### Installed via apt-get
+
+###### Checking postgresql packages
+
+    >> dpkg -l  grep postgres
+
+###### Uninstalling all installed packages
+
+    >> sudo apt-get --purge remove pgdg-keyring postgresql*
+
+##### uninstall via brew
+
+    >> brew uninstall postgresql
+    >> rm .psql_history
+
+### Installing postgres
+
+##### via apt-get
+
+    >> sudo apt-get install postgresql postgresql-contrib postgresql-server-dev-all
+
+##### via brew
+
+    >> brew install postgresql
+
+### Step1 - Add your client ip as trusted ip by modifying pg_hba.conf
 
     >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/pg_hba.conf
     >> Macos:  vim /usr/local/var/postgres/pg_hba.conf
     -  Add the line: host  all   all  <client-ip>/24   trust
 
-### step 2: Server listening to clients
+### Step2 -Server listening to clients
+
 Change the postgresql.conf on server machine to listen to all addresses.
 
     >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/postgresql.conf
     >> MacOS:  vim /usr/local/var/postgres/postgresql.conf
     -  Change listen_addresses = 'localhost' => listen_addresses = '*'
 
-### step 3: Restart postgres on your server:
+### Step3 -Restart postgres on your server:
 
     Ubuntu:
     >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres stop
@@ -173,21 +202,38 @@ Change the postgresql.conf on server machine to listen to all addresses.
     >> pg_ctl -D /usr/local/var/postgres start
 
 
-### step 4: Test the remote connection
-Find the remote server ip:
+### Step4 - Test the remote connection
 
-    Ubuntu:
+#### Find the remote server ip:
+
+Ubuntu:
+
     >> ip addr show
     >> 172.29.207.12/24 (Atmosphere server)
 
-    MacOS:
+MacOS:
+
     >> ipconfig getifaddr en0
     >> 192.168.0.13
 
-    Connect to remote postgres
+Connect to remote postgres
+
     >> psql -U postgres -h <remote-ip>
 
+#### Check PostgreSQL version
+
+    >> apt show postgresql
+
+#### Signing in into postgres
+
+    >> sudo -u postgres psql
+
+#### Showing information on database name, username, port, socket path
+
+    >> postgres=# \conninfo
+
 # sftp
+
 source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
 
 step 0: Save the ssh authentication credentials
