@@ -107,25 +107,32 @@ REMOTE-DATABASE:
 # Backend store
 Database (backend-store-uri) needs to be encoded as dialect+driver://username:password@host:port/database.
 
+    Style of backend store for postgres:
+    --backend-store-uri f'{dialect_driver}://{username}:{password}@{ip}/{database_name}'
+
+Example (default):
+
     mlflow ui  --backend-store-uri <absolute-path-to-mlruns> \
                   --default-artifact-root <absolute-path-ro-artifacts> \
                   --host 0.0.0.0
                   --port 5000
 
-    mlflow server --backend-store-uri postgresql://mlflow_developer@localhost/mlflow_db
-                     --default-artifact-root artifacts_postgresql
-                     --host 0.0.0.0 --port 5000
 
-    --backend-store-uri f'{dialect_driver}://{username}:{password}@{ip}/{database_name}'
+Example:
 
-    mlflow ui \
+        >> mlflow ui --host 0.0.0.0 --port 5000 \
         --backend-store-uri postgresql://mlflow_developer:1234@localhost/mlflow_db \
+
+        HPC for artifact:
+        --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+
+        Local storage for artifact:
         --default-artifact-root file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store
-        --host 0.0.0.0 --port 5000
 
 # postgresql
     initdb /usr/local/var/postgres
-    pg_ctl -D /usr/local/var/postgres -l logfile start
+    Mac: pg_ctl -D /usr/local/var/postgres -l logfile start
+    Linux: pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres -l logfile start
 
     >> psql postgres
 
@@ -138,7 +145,50 @@ go into a specific database & a specific user:
 show tables within the database
     \d+
 
+## Access to remote server postgres:
+Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection/
+
+### step 1:
+Add your client ip as trusted ip by modifying pg_hba.conf
+
+    >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/pg_hba.conf
+    >> Macos:  vim /usr/local/var/postgres/pg_hba.conf
+    -  Add the line: host  all   all  <client-ip>/24   trust
+
+### step 2: Server listening to clients
+Change the postgresql.conf on server machine to listen to all addresses.
+
+    >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/postgresql.conf
+    >> MacOS:  vim /usr/local/var/postgres/postgresql.conf
+    -  Change listen_addresses = 'localhost' => listen_addresses = '*'
+
+### step 3: Restart postgres on your server:
+
+    Ubuntu:
+    >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres stop
+    >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start
+
+    MacOS:
+    >> pg_ctl -D /usr/local/var/postgres stop
+    >> pg_ctl -D /usr/local/var/postgres start
+
+
+### step 4: Test the remote connection
+Find the remote server ip:
+
+    Ubuntu:
+    >> ip addr show
+    >> 172.29.207.12/24 (Atmosphere server)
+
+    MacOS:
+    >> ipconfig getifaddr en0
+    >> 192.168.0.13
+
+    Connect to remote postgres
+    >> psql -U postgres -h <remote-ip>
+
 # sftp
 source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
 
-sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+step 0: Save the ssh authentication credentials
+step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
