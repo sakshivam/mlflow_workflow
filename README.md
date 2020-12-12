@@ -171,7 +171,7 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
     2.1 Installing Brew in Ubuntu
 
         >> sudo apt-get install build-essential curl file
-        >> sudo apt install linuxbrew-wrapper 
+        >> sudo apt install linuxbrew-wrapper
         >> brew
 
     2.2 Installing postgresql using brew
@@ -224,6 +224,8 @@ Change the postgresql.conf on server machine to listen to all addresses.
     MacOS:
     >> pg_ctl -D /usr/local/var/postgres stop
     >> pg_ctl -D /usr/local/var/postgres start
+    Or
+    >> brew services restart postgresql
 
 #### Test the connection by connecting to remote postgres
 
