@@ -10,7 +10,12 @@ epochs, batch_size = reading_terminal_inputs()
 username = 'mlflow_developer'
 password = '1234'
 port     = '5000'
-ip       = '172.29.207.12' # Ubuntu-Laptop: '192.168.0.19' # localhost: '127.0.0.1'
+
+# Atmosphere:        '172.29.207.12'
+# Ubuntu-Laptop:     '192.168.0.19'
+# localhost:         '127.0.0.1'
+# Data7 workstation: '10.208.16.20'
+ip       = '10.208.16.20'
 database_name  = 'mlflow_db'
 dialect_driver = 'postgresql'
 
@@ -27,7 +32,7 @@ mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 """ Creating experiment """
-experiment_name = '/experiment_Server_remotepostgres_atmosphere_Artifact_HPC'
+experiment_name = '/experiment_Server_remotepostgres_data7_Artifact_HPC'
 mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
 
 """ Setting the experiment """
