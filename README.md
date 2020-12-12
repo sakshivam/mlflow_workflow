@@ -249,6 +249,6 @@ step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/
 
 # Conda Environment
 
-    >> conda env create -n mlflow python=3.7
+    >> conda create -n mlflow python=3.7
     >> conda install -c conda-forge scikit-learn scikit-image nibabel nilearn matplotlib numpy ipython pandas
     >> conda install -c anaconda tensorflow>=2.0 keras
