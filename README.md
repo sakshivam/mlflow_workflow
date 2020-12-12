@@ -145,32 +145,46 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
 #### Completely purging postgresql
 
-##### Installed via apt-get
+1. via apt-get
 
-###### Checking postgresql packages
+    1.1 Checking postgresql packages
 
-    >> dpkg -l  grep postgres
+        >> dpkg -l  grep postgres
 
-###### Uninstalling all installed packages
+    1.2 Uninstalling all installed packages
 
-    >> sudo apt-get --purge remove pgdg-keyring postgresql*
+        >> sudo apt-get --purge remove pgdg-keyring postgresql*
 
-##### uninstall via brew
+2. via brew
 
     >> brew uninstall postgresql
     >> rm .psql_history
 
-### Installing postgres
+#### Installing postgres
 
-##### via apt-get
+1. via apt-get
 
     >> sudo apt-get install postgresql postgresql-contrib postgresql-server-dev-all
 
-##### via brew
+2. via brew
 
-    >> brew install postgresql
+    2.1 Installing Brew in Ubuntu
 
-##### Check PostgreSQL version
+        >> sudo apt-get install build-essential curl file
+        >> sudo apt install linuxbrew-wrapper 
+        >> brew
+
+    2.2 Installing postgresql using brew
+
+        >> brew install postgresql
+
+    2.3 Conda Environment
+
+        >> conda create -n mlflow python=3.7
+        >> conda install -c conda-forge scikit-learn scikit-image nibabel nilearn matplotlib numpy ipython pandas
+        >> conda install -c anaconda tensorflow>=2.0 keras
+
+#### Check PostgreSQL version
 
     >> apt show postgresql
 
@@ -178,14 +192,12 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
 #### Find the remote server ip
 
-Ubuntu:
-
+    Ubuntu:
     >> ip addr show
     >> 172.29.207.12/24 (Atmosphere server)
     >> 192.168.0.19/24  (My Laptop)
 
-MacOS:
-
+    MacOS:
     >> ipconfig getifaddr en0
     >> 192.168.0.13
 
@@ -245,10 +257,3 @@ source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#
 
 step 0: Save the ssh authentication credentials
 step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
-
-
-# Conda Environment
-
-    >> conda create -n mlflow python=3.7
-    >> conda install -c conda-forge scikit-learn scikit-image nibabel nilearn matplotlib numpy ipython pandas
-    >> conda install -c anaconda tensorflow>=2.0 keras
