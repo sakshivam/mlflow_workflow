@@ -194,13 +194,14 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
     Ubuntu:
     >> ip addr show
-    >> 172.29.207.12/24 (Atmosphere server)
-    >> 192.168.0.19/24  (My Laptop)
-    >> 10.208.16.20/24  (Data7 workstation)
+    >> 128.196.142.23/24 (Atmosphere server)
+    >> 150.135.165.137/24   (Home WiFi)
+    >> 10.138.88.132/24     (Home WiFi)
+    >> 150.135.165.66/24   (Data7 workstation)
 
     MacOS:
     >> ipconfig getifaddr en0
-    >> 192.168.0.13      (My MacOS)  Maybe: 68.105.2811
+    >> 68.110.78.48/24   (My MacOS)
 
 #### Set up server to listen to clients (postgresql.conf & pg_hba.conf)
 
@@ -229,10 +230,9 @@ Change the postgresql.conf on server machine to listen to all addresses.
 
 #### Test the connection by connecting to remote postgres
 
-        172.29.207.12/24 (Atmosphere server)
-        192.168.0.19/24  (My Laptop)
+        128.196.142.23/24 (Atmosphere server)
         10.208.16.20/24  (Data7 workstation)
-        192.168.0.13     (My MacOS)  Maybe: 68.105.2811
+        68.110.78.48     (Home WiFi)
 
     >> psql postgres -h <remote-ip> -p 5432 -U mlflow_developer
 
