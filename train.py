@@ -10,7 +10,7 @@ epochs, batch_size = reading_terminal_inputs()
 username = 'mlflow_developer'
 password = '1234'
 port     = '5000'
-ip       = '127.0.0.1'
+ip       = '172.29.207.12' # Ubuntu-Laptop: '192.168.0.19' # localhost: '127.0.0.1'
 database_name  = 'mlflow_db'
 dialect_driver = 'postgresql'
 
@@ -20,18 +20,17 @@ dialect_driver = 'postgresql'
 server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' # :{port}
 # server   = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store"
 
-# artifact = server
 # artifact = "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store"
 artifact = 'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store'
 
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
-""" creating experiment """
-experiment_name = '/experiment_postgres_local_server_artifact_HPC'
+""" Creating experiment """
+experiment_name = '/experiment_Server_remotepostgres_atmosphere_Artifact_HPC'
 mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
 
-""" setting the experiment:  mlflow experiment create -n "/exp_simple2" -l <artifcat-location> """
+""" Setting the experiment """
 mlflow.set_experiment(experiment_name=experiment_name)
 
 mlflow.keras.autolog()
@@ -41,7 +40,7 @@ if __name__ == "__main__":
 
     (train_images, train_labels), (test_images, test_labels) = loading_data()
 
-    with mlflow.start_run(run_name='run_postgres_r1') as f:  # experiment_id='7'
+    with mlflow.start_run(run_name='run_postgres_r2') as f:  # experiment_id='7'
         history = model.fit(train_images, train_labels, epochs=epochs, batch_size=batch_size,
                             validation_data=(test_images, test_labels))
 

@@ -56,12 +56,12 @@ Where Runs Are Recorded:
     - HTTP server (specified as https://my-server:5000), that hosts an MLflow tracking server.
     - Databricks
 
-
-
 # MLflow Projects: MLProject.yaml
+
 A convention for organizing your code to let other data scientists run it
 
 Each project is:
+
 1) a directory of files
 2) Git repository.
 
@@ -73,14 +73,17 @@ You can run the project:
     mlflow.projects.run() Python API
 
 These APIs also allow submitting the project for remote execution
+
 - Databricks
 - Kubernetes
 
 #### mlflow experiments:
+
 https://www.mlflow.org/docs/latest/cli.html#mlflow-experiments
 
 
 # Configuring databricks
+
 -> https://docs.databricks.com/dev-tools/cli/index.html
 pip install databricks-cli
 
@@ -105,6 +108,7 @@ REMOTE-DATABASE:
     mlflow.set_tracking_uri("databricks") """
 
 # Backend store
+
 Database (backend-store-uri) needs to be encoded as dialect+driver://username:password@host:port/database.
 
     Style of backend store for postgres:
@@ -117,38 +121,27 @@ Example (default):
                   --host 0.0.0.0
                   --port 5000
 
-
 Example:
 
-        >> mlflow ui --host 0.0.0.0 --port 5000 \
-        --backend-store-uri postgresql://mlflow_developer:1234@localhost/mlflow_db \
+    >> mlflow ui --port 5000 \
+    --backend-store-uri postgresql://mlflow_developer:1234@localhost/mlflow_db
+    --backend-store-uri postgresql://mlflow_developer:1234@192.168.0.19/mlflow_db
 
-        HPC for artifact:
-        --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+    HPC for artifact:
+    --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
 
-        Local storage for artifact:
-        --default-artifact-root file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store
+    Local storage for artifact:
+    --default-artifact-root file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store
 
-# postgresql
-    initdb /usr/local/var/postgres
-    Mac: pg_ctl -D /usr/local/var/postgres -l logfile start
-    Linux: pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres -l logfile start
+Example to HPC-artifact & remote-postgres
 
-    >> psql postgres
-
-show Users: \du \
-show databases: \list \
-show something! \dp
-
-go into a specific database & a specific user:
-    psql -d mlflow_db -U mlflow_user
-show tables within the database
-    \d+
+    >> mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@192.168.0.19/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
 
 ## Access to remote server postgres:
+
 Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection/
 
-### Step 0:
+### Step 0
 
 #### Completely purging postgresql
 
@@ -177,13 +170,31 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
     >> brew install postgresql
 
-### Step1 - Add your client ip as trusted ip by modifying pg_hba.conf
+##### Check PostgreSQL version
+
+    >> apt show postgresql
+
+### Setting up remote/client access
+
+#### Find the remote server ip
+
+Ubuntu:
+
+    >> ip addr show
+    >> 172.29.207.12/24 (Atmosphere server)
+    >> 192.168.0.19/24  (My Laptop)
+
+MacOS:
+
+    >> ipconfig getifaddr en0
+    >> 192.168.0.13
+
+#### Set up server to listen to clients (postgresql.conf & pg_hba.conf)
+
+Add the line: host  'all   all  \<client-ip\>/24   trust'
 
     >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/pg_hba.conf
     >> Macos:  vim /usr/local/var/postgres/pg_hba.conf
-    -  Add the line: host  all   all  <client-ip>/24   trust
-
-### Step2 -Server listening to clients
 
 Change the postgresql.conf on server machine to listen to all addresses.
 
@@ -191,7 +202,7 @@ Change the postgresql.conf on server machine to listen to all addresses.
     >> MacOS:  vim /usr/local/var/postgres/postgresql.conf
     -  Change listen_addresses = 'localhost' => listen_addresses = '*'
 
-### Step3 -Restart postgres on your server:
+#### Restart postgres on your server
 
     Ubuntu:
     >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres stop
@@ -201,36 +212,32 @@ Change the postgresql.conf on server machine to listen to all addresses.
     >> pg_ctl -D /usr/local/var/postgres stop
     >> pg_ctl -D /usr/local/var/postgres start
 
+#### Test the connection by connecting to remote postgres
 
-### Step4 - Test the remote connection
+    >> psql postgres -h <remote-ip> -p 5432 -U mlflow_developer
 
-#### Find the remote server ip:
+#### Setting up postgres
 
-Ubuntu:
+Go into psql
 
-    >> ip addr show
-    >> 172.29.207.12/24 (Atmosphere server)
+    >> psql postgres
 
-MacOS:
+Go into a specific database & a specific user:
 
-    >> ipconfig getifaddr en0
-    >> 192.168.0.13
+    >> psql -d mlflow_db -U mlflow_user
 
-Connect to remote postgres
+    postgres=#  CREATE DATABASE mlflow_db;
+    postgres=#  CREATE USER mlflow_user WITH ENCRYPTED PASSWORD 'mlflow';
+    postgres=#  GRANT ALL PRIVILEGES ON DATABASE mlflow_db TO mlflow_user;
 
-    >> psql -U postgres -h <remote-ip>
-
-#### Check PostgreSQL version
-
-    >> apt show postgresql
-
-#### Signing in into postgres
-
-    >> sudo -u postgres psql
-
-#### Showing information on database name, username, port, socket path
+Showing information on database name, username, port, socket path
 
     >> postgres=# \conninfo
+
+    Show Users: \du \
+    Show databases: \list \
+    Show something! \dp
+    Show tables within the database       \d+
 
 # sftp
 
