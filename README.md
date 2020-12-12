@@ -245,3 +245,10 @@ source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#
 
 step 0: Save the ssh authentication credentials
 step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+
+
+# Conda Environment
+
+    >> conda env create -n mlflow python=3.7
+    >> conda install -c conda-forge scikit-learn scikit-image nibabel nilearn matplotlib numpy ipython pandas
+    >> conda install -c anaconda tensorflow>=2.0 keras
