@@ -11,19 +11,31 @@ username = 'mlflow_developer'
 password = '1234'
 port     = '5000'
 
-# Atmosphere:        '172.29.207.12'
-# Ubuntu-Laptop:     '192.168.0.19'
-# localhost:         '127.0.0.1'
-# Data7 workstation: '10.208.16.20'
-# My MacOS           '192.168.0.13'
-ip       = '192.168.0.19'
+print('--------------------------------------------------')
+print('--------------------------------------------------')
+print('--------------------------------------------------')
+
+"""
+RUN UI with postgres and HPC:
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5000
+
+RUN directly from GitHub:
+    mlflow run https://github.com/artinmajdi/mlflow_workflow.git --no-conda --experiment-name experiment_Server_localpostgres_data7_Artifact_HPC
+
+
+    128.196.142.23/24 (Atmosphere server)
+    10.208.16.20/24  (Data7 workstation)
+    68.110.78.48     (Home WiFi)
+
+"""
+ip       = 'localhost' # '192.168.0.19'
 database_name  = 'mlflow_db'
 dialect_driver = 'postgresql'
 
 """ below is the style we should use when running mlflow ui
     server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' """
 
-server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' # :{port}
+server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}' # :{port}
 # server   = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store"
 
 # artifact = "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store"
@@ -33,7 +45,7 @@ mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 """ Creating experiment """
-experiment_name = '/experiment_Server_remotepostgres_data7_Artifact_HPC'
+experiment_name = '/experiment_Server_localpostgres_data7_Artifact_HPC'
 mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
 
 """ Setting the experiment """

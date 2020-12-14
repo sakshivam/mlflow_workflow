@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/artinmac/Documents/Research/Data7/mlflow/mlflow_workflow/mlruns/0/f181c101ad514120827ab14f8adb44cf/artifacts
+end_time: 1607922715627
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: f181c101ad514120827ab14f8adb44cf
+run_uuid: f181c101ad514120827ab14f8adb44cf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1607922600328
+status: 4
+tags: []
+user_id: artinmac

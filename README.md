@@ -135,7 +135,7 @@ Example:
 
 Example to HPC-artifact & remote-postgres
 
-    >> mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@192.168.0.19/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+    >> mlflow server --backend-store-uri postgresql://mlflow_developer:1234@128.196.142.23/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5000
 
 ## Access to remote server postgres:
 

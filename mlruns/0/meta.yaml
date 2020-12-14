@@ -1,0 +1,4 @@
+artifact_location: file:///Users/artinmac/Documents/Research/Data7/mlflow/mlflow_workflow/mlruns/0
+experiment_id: '0'
+lifecycle_stage: active
+name: experiment_Server_localpostgres_data7_Artifact_HPC
