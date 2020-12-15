@@ -7,17 +7,16 @@ import numpy as np
 
 epochs, batch_size = reading_terminal_inputs()
 
-username = 'mlflow_developer'
-password = '1234'
-port     = '5000'
-
-print('--------------------------------------------------')
-print('--------------------------------------------------')
-print('--------------------------------------------------')
-
 """
 RUN UI with postgres and HPC:
-    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5000
+    REMOTE postgres server:
+        # connecting to remote server through ssh tunneling
+          ssh -L 5000:128.196.142.23:5432 artinmajdi@128.196.142.23
+        # using the mapped port and localhost
+          mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+
+    LOCAL postgres server:
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
 
 RUN directly from GitHub:
     export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
@@ -29,7 +28,10 @@ RUN directly from GitHub:
     68.110.78.48     (Home WiFi)
 
 """
-ip       = 'localhost' # '192.168.0.19'
+username = 'mlflow_developer'
+password = '1234'
+port     = '5000'
+ip       = 'localhost' # '128.196.142.23' #
 database_name  = 'mlflow_db'
 dialect_driver = 'postgresql'
 
@@ -46,7 +48,7 @@ mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 """ Creating experiment """
-experiment_name = '/experiment_Server_localpostgres_data7_Artifact_HPC'
+experiment_name = '/experiment_Server_atmosphere_postgres_ssh_Artifact_HPC'
 mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
 
 """ Setting the experiment """

@@ -259,6 +259,29 @@ Showing information on database name, username, port, socket path
     Show something! \dp
     Show tables within the database       \d+
 
+# RUN MLflow UI with postgres and HPC:
+## Remote postgres server:
+Connecting to remote server through ssh tunneling
+
+    ssh -L 5000:128.196.142.23:5432 artinmajdi@128.196.142.23
+
+Running the remote postgres on local machine using the mapped port and localhost
+
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+
+Running the local postgres server:
+
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+
+# Run directly from GitHub:
+    export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
+    mlflow run --no-conda --experiment-name experiment_Server_localpostgres_data7_Artifact_HPC https://github.com/artinmajdi/mlflow_workflow.git -v main
+
+
+    128.196.142.23/24 (Atmosphere server)
+    10.208.16.20/24  (Data7 workstation)
+    68.110.78.48     (Home WiFi)
+
 # sftp
 
 source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
