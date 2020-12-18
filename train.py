@@ -19,8 +19,11 @@ RUN UI with postgres and HPC:
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
 
 RUN directly from GitHub:
+
     export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
-    mlflow run --no-conda --experiment-name experiment_Server_atmosphere_postgres_ssh_Artifact_HPC https://github.com/artinmajdi/mlflow_workflow.git -v main
+
+    mlflow run                 --no-conda --experiment-id 5 -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
+    mlflow run mlflow_workflow --no-conda --experiment-id 5 -P epoch=2
 
 
     128.196.142.23/24 (Atmosphere server)

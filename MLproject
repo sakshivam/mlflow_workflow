@@ -1,4 +1,4 @@
-name: mlflow_test
+name: mlflow
 
 conda_env: conda.yaml
 

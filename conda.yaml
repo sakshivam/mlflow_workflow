@@ -1,19 +1,28 @@
-name: mlflow
+name: mlflow2
 channels:
   - intel
   - conda-forge
   - anaconda
   - defaults
 dependencies:
-  - mlflow
-  - nibabel
-  - nilearn
-  - scipy
-  - scikit-image
-  - scikit-learn
-  - numpy
-  - matplotlib
-  - pandas
-  - tensorflow-gpu~=2.3
-  - keras
-prefix: /Users/artinmac/.conda/envs/mlflow
+  - imageio=2.9.0
+  - ipykernel=5.3.4
+  - ipython=7.19.0
+  - matplotlib=3.3.2
+  - mlflow=1.11.0
+  - nibabel=3.2.0
+  - nilearn=0.6.2
+  - numpy=1.19.1
+  - pandas=1.0.5
+  - pip=20.2.4
+  - protobuf=3.13.0.1
+  - psycopg2=2.8.6
+  - pydicom=2.0.0
+  - pysftp=0.2.9
+  - python=3.7.9
+  - scikit-image=0.17.2
+  - scikit-learn=0.23.2
+  - scipy=1.5.2
+  - tensorflow=2.0
+  - keras=2.3.1
+  - tqdm=4.50.2
