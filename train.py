@@ -57,9 +57,6 @@ mlflow.set_tracking_uri(server)
 experiment_name = '/experiment_Server_atmosphere_postgres_ssh_Artifact_HPC'
 # mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 
-# experiment_name = 'experiment_Server_atmosphere_postgres_local_Artifact_HPC'
-# mlflow.create_experiment(name=experiment_name)
-
 """ Setting the experiment """
 mlflow.set_experiment(experiment_name=experiment_name)
 
