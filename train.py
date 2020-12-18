@@ -30,15 +30,15 @@ RUN directly from GitHub:
 """
 username = 'mlflow_developer'
 password = '1234'
-port     = '5000'
-ip       = 'localhost' # '128.196.142.23' #
-database_name  = 'mlflow_db'
+port = '5000'
+ip = 'localhost'  # '128.196.142.23' #
+database_name = 'mlflow_db'
 dialect_driver = 'postgresql'
 
 """ below is the style we should use when running mlflow ui
     server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' """
 
-server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}' # :{port}
+server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'  # :{port}
 # server   = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store"
 
 # artifact = "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store"
@@ -49,7 +49,7 @@ mlflow.set_tracking_uri(server)
 
 """ Creating experiment """
 experiment_name = '/experiment_Server_atmosphere_postgres_ssh_Artifact_HPC'
-mlflow.create_experiment(name=experiment_name , artifact_location=artifact)
+mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 
 """ Setting the experiment """
 mlflow.set_experiment(experiment_name=experiment_name)

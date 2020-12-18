@@ -288,3 +288,7 @@ source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#
 
 step 0: Save the ssh authentication credentials
 step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+
+
+# Docker
+docker pull nvidia/cuda
