@@ -65,13 +65,6 @@ Each project is:
 1) a directory of files
 2) Git repository.
 
-You can run the project:
-    mlflow run command-line tool
-
-    mlflow run mlflow_workflow --no-conda --experiment-name /experiments_demo_databricks2
-
-    mlflow.projects.run() Python API
-
 These APIs also allow submitting the project for remote execution
 
 - Databricks
@@ -128,14 +121,14 @@ Example:
     --backend-store-uri postgresql://mlflow_developer:1234@192.168.0.19/mlflow_db
 
     HPC for artifact:
-    --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+    --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store
 
     Local storage for artifact:
     --default-artifact-root file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store
 
 Example to HPC-artifact & remote-postgres
 
-    >> mlflow server --backend-store-uri postgresql://mlflow_developer:1234@128.196.142.23/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5000
+    >> mlflow server --backend-store-uri postgresql://mlflow_developer:1234@128.196.142.23/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 5000
 
 ## Access to remote server postgres:
 
@@ -267,15 +260,17 @@ Connecting to remote server through ssh tunneling
 
 Running the remote postgres on local machine using the mapped port and localhost
 
-    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
 
 Running the local postgres server:
 
-    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store --port 5432
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
 
 # Run directly from GitHub:
-    export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
-    mlflow run --no-conda --experiment-name experiment_Server_localpostgres_data7_Artifact_HPC https://github.com/artinmajdi/mlflow_workflow.git -v main
+You can run the project:
+
+    export MLFLOW_TRACKING_URI=http://127.0.0.1:6789
+    mlflow run --no-conda --experiment-name experiment_Server_atmosphere_postgres_ssh_Artifact_HPC -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
 
 
     128.196.142.23/24 (Atmosphere server)
@@ -287,7 +282,7 @@ Running the local postgres server:
 source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
 
 step 0: Save the ssh authentication credentials
-step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/mlflow/artifact_store
+step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store
 
 
 # Docker
