@@ -285,5 +285,22 @@ step 0: Save the ssh authentication credentials
 step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store
 
 
+# iRODS from HPC to CyVerse
+
+## Connecting
+
+    >> iinit
+    >> server address:  data.cyverse.org
+    >> port number:     1247
+    >> iRODS user name: <CyVerse-username>
+    >> iRODS zone:      iplant
+    >> iRODS password:  <password>
+
+## iCommands
+
+    >> ils , icd , ipwd
+    >> iput , iget
+
 # Docker
-docker pull nvidia/cuda
+
+    >> docker pull nvidia/cuda
