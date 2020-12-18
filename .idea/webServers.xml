@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="03940a53-8e91-4a3d-bcc8-8383efb27d78" name="HPC">
+        <fileTransfer rootFolder="/home/u29/mohammadsmajdi" accessType="SFTP" host="hpc.arizona.edu" port="22" sshConfigId="75df7490-d01a-44ff-97d6-fb83ae056b9a" sshConfig="mohammadsmajdi@hpc.arizona.edu:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
