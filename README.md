@@ -304,3 +304,9 @@ step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/
 # Docker
 
     >> docker pull nvidia/cuda
+
+# TODO
+Create a story (one PI, two developers, one final-user)
+- PI can view and edit the databases
+- Developers can collaborate using authentication tokens (instaed of HPC, use CyVerse for artifact storage, and then use authentication)
+- Final-users can curl into a served-model feeding their input data and get the results
