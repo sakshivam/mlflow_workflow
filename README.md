@@ -301,6 +301,16 @@ step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/
     >> ils , icd , ipwd
     >> iput , iget
 
+## Accessing CyVerse profile/data through web browser
+
+    >> https://data.cyverse.org/dav/iplant/home/artinmajdi/
+
+## IMPORTANT: Reading data through iRODS from within python
+
+To be able to have datasets in one place and run the HPC instances from that place automatically)
+
+    >> https://github.com/irods/python-irodsclient
+
 # Docker
 
     >> docker pull nvidia/cuda
