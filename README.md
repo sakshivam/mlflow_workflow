@@ -150,8 +150,8 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
 2. via brew
 
-    >> brew uninstall postgresql
-    >> rm .psql_history
+        >> brew uninstall postgresql
+        >> rm .psql_history
 
 #### Installing postgres
 
@@ -256,7 +256,7 @@ Showing information on database name, username, port, socket path
 ## Remote postgres server:
 Connecting to remote server through ssh tunneling
 
-    ssh -L 5000:128.196.142.23:5432 artinmajdi@128.196.142.23
+    ssh -L 5000:128.196.142.53:5432 artinmajdi@128.196.142.53
 
 Running the remote postgres on local machine using the mapped port and localhost
 
