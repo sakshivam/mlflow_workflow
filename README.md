@@ -1,5 +1,81 @@
-# mlflow_workflow
+# 1.Installation
 
+
+## 1.1.Installing the package requirements
+#### Automatically from requirements.yaml file
+    conda activate env_name
+
+    conda env create -f requirements.yaml -n env_name
+
+#### Installing manually
+    conda create -n env_name
+    conda activate env_name
+
+    conda install -c anaconda keras tensorflow-gpu
+    conda install -c anaconda numpy pandas matplotlib 
+    conda install -c anaconda psycopg2 git
+    pip install mlflow==1.12.1
+    pip install pysftp
+
+## 1.2.Remote ssh to atmosphere server
+    ssh -L 5000:<ip>:5432 <username>@<ip>
+    ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
+
+
+## 1.3.Viewing the results in mlflow server
+
+Remote postgres server:
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789
+
+Local postgres server:
+    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --port 6789
+
+## 1.4.Runing the code 
+
+
+### 1.4.1.Directly from GitHub:
+
+    # -v specify the GitHub Branch
+    export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
+    mlflow experiments list
+
+    mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
+    mlflow run code --no-conda --experiment-id experiment_id -P epoch=2 
+
+## 1.5.viewing the outputs
+### 1.5.1.UI with postgres:
+    REMOTE postgres server:
+        # Step 1: Connecting to remote server through ssh tunneling
+          ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
+
+        # Step 2: Connecting to remote postgres server
+          mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789
+
+    LOCAL postgres server:
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --port 6789
+
+
+### 1.5.2.Show experiments/runs list
+    export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
+
+    mlflow runs list --experiment-id <id>
+
+
+
+
+
+# sftp
+
+source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
+
+step 0: Save the ssh authentication credentials
+step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store
+
+
+
+
+
+-----------------------------------------------------------------------------
 # MLflow Tracking
 
 MLflow is an open source platform for managing the end-to-end machine learning lifecycle.
@@ -251,38 +327,6 @@ Showing information on database name, username, port, socket path
     Show databases: \list \
     Show something! \dp
     Show tables within the database       \d+
-
-# RUN MLflow UI with postgres and HPC:
-## Remote postgres server:
-Connecting to remote server through ssh tunneling
-
-    ssh -L 5000:128.196.142.53:5432 artinmajdi@128.196.142.53
-
-Running the remote postgres on local machine using the mapped port and localhost
-
-    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
-
-Running the local postgres server:
-
-    mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
-
-# Run directly from GitHub:
-You can run the project:
-
-    export MLFLOW_TRACKING_URI=http://127.0.0.1:6789
-    mlflow run --no-conda --experiment-name experiment_Server_atmosphere_postgres_ssh_Artifact_HPC -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
-
-
-    128.196.142.23/24 (Atmosphere server)
-    10.208.16.20/24  (Data7 workstation)
-    68.110.78.48     (Home WiFi)
-
-# sftp
-
-source: <https://public.confluence.arizona.edu/display/UAHPC/Transferring+Files#TransferringFiles-GeneralFileTransfers>
-
-step 0: Save the ssh authentication credentials
-step 1: sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store
 
 
 # iRODS from HPC to CyVerse

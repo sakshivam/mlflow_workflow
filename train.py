@@ -7,33 +7,6 @@ import numpy as np
 
 epochs, batch_size = reading_terminal_inputs()
 
-"""
-RUN UI with postgres and HPC:
-    REMOTE postgres server:
-        # connecting to remote server through ssh tunneling
-          ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
-        # using the mapped port and localhost
-          mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
-
-    LOCAL postgres server:
-        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --default-artifact-root sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store --port 6789
-
-RUN directly from GitHub:
-
-    export MLFLOW_TRACKING_URI=http://127.0.0.1:5000
-
-    mlflow run                 --no-conda --experiment-id 5 -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
-    mlflow run mlflow_workflow --no-conda --experiment-id 5 -P epoch=2
-
-
-    128.196.142.23/24 (Atmosphere server)
-    10.208.16.20/24  (Data7 workstation)
-    68.110.78.48     (Home WiFi)
-
-show experiments/runs lsit
-    export MLFLOW_TRACKING_URI=http://127.0.0.1:6789
-    mlflow runs list --experiment-id <id>
-"""
 username = 'mlflow_developer'
 password = '1234'
 port = '5000'
@@ -63,8 +36,8 @@ mlflow.set_tracking_uri(server)
 """ Creating experiment """
 ExperimentName = {
     'local':      '/exp_final_artifact_local',
-    'hpc':        '/exp_final_artifact_atmosphere',
-    'atmosphere': '/exp_final_artifact_hpc'}
+    'hpc':        '/exp_final_artifact_hpc',
+    'atmosphere': '/exp_final_artifact_atmosphere'}
 
 experiment_name = ExperimentName[artifact_server]
 # mlflow.create_experiment(name=experiment_name, artifact_location=artifact)

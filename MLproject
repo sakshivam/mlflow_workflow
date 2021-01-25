@@ -1,6 +1,6 @@
 name: mlflow
 
-conda_env: conda.yaml
+conda_env: requirements.yaml
 
 
 entry_points:
