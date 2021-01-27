@@ -12,10 +12,13 @@ import numpy as np
 
     Step 2 (after running the code): Connecting to remote postgres server
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 """
+
+
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Reading the inputs fed through the command line """
 # epochs, batch_size = reading_terminal_inputs()
 epochs, batch_size = 3,32
+
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ MLflow settings: 
@@ -31,6 +34,8 @@ database_name = 'mlflow_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
+
+
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
 artifact_server = 'atmosphere'
@@ -44,6 +49,7 @@ artifact = Artifacts[artifact_server]
 
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
+
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
@@ -65,6 +71,7 @@ mlflow.keras.autolog()
 
 mlflow.start_run()
 
+
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Model optimization """
 model = architecture()
@@ -76,6 +83,7 @@ model = architecture()
 history = model.fit(train_images, train_labels, epochs=epochs, batch_size=batch_size,
                     validation_data=(test_images, test_labels))
 
+
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Model evaluation """
 test_loss, test_acc = model.evaluate(test_images, test_labels)
@@ -84,6 +92,7 @@ print('Loss: ', test_loss)
 
 prediction = model.predict(test_images)
 predicted_classes = np.argmax(prediction, axis=1)
+
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Saving MLflow parameters & metrics """
@@ -103,4 +112,6 @@ mlflow.log_metric("test_loss", test_loss)
 # client.create_registered_model(description='first registered model', name=experiment_name)
 
 print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
+
+
 # %% ---------------------------------------------------------------------------------------------------------------------
