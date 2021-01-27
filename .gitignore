@@ -1,6 +1,8 @@
 *.code-workspace
 # Byte-compiled / optimized / DLL files
 __pycache__/
+mlruns/
+
 *.py[cod]
 *$py.class
 

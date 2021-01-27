@@ -1,25 +1,37 @@
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Importing the packages """
 import os
-
 os.environ['KMP_DUPLICATE_LIB_OK'] = "TRUE"
 from small_functions import architecture, loading_data, reading_terminal_inputs
 import mlflow
 import numpy as np
 
-epochs, batch_size = reading_terminal_inputs()
+""" REMOTE postgres server: 
+    Step 1 (before running the code): Connecting to remote server through ssh tunneling
+        ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
+
+    Step 2 (after running the code): Connecting to remote postgres server
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 """
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Reading the inputs fed through the command line """
+# epochs, batch_size = reading_terminal_inputs()
+epochs, batch_size = 3,32
+
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" MLflow settings: 
+        The style we should use when running mlflow ui
+            Postgres server: server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' 
+            Local:           server = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store" """
 
 username = 'mlflow_developer'
 password = '1234'
 port = '5000'
-ip = 'localhost'  # '128.196.142.23' #
+ip = 'localhost'
 database_name = 'mlflow_db'
 dialect_driver = 'postgresql'
 
-""" below is the style we should use when running mlflow ui
-    server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' """
-
 server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
-# server   = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store"
-
+# %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
 artifact_server = 'atmosphere'
 
@@ -33,49 +45,62 @@ artifact = Artifacts[artifact_server]
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
-""" Creating experiment """
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Creating/Setting the experiment """
 ExperimentName = {
     'local':      '/exp_final_artifact_local',
     'hpc':        '/exp_final_artifact_hpc',
     'atmosphere': '/exp_final_artifact_atmosphere'}
 
 experiment_name = ExperimentName[artifact_server]
-# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 
-""" Setting the experiment """
+""" Line below should be commented if the experiment is already created
+    If kept commented during the first run of a new experiment, the set_experiment 
+    will automatically create the new experiment with local artifact storage """
+# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 mlflow.set_experiment(experiment_name=experiment_name)
 
+""" Loading the optimization parameters aturomatically from keras """
 mlflow.keras.autolog()
 
-if __name__ == "__main__":
-    model = architecture()
+mlflow.start_run()
 
-    (train_images, train_labels), (test_images, test_labels) = loading_data()
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Model optimization """
+model = architecture()
 
-    with mlflow.start_run() as f:  # run_name='run_postgres_r2'experiment_id='7'
-        history = model.fit(train_images, train_labels, epochs=epochs, batch_size=batch_size,
-                            validation_data=(test_images, test_labels))
+(train_images, train_labels), (test_images, test_labels) = loading_data()
 
-        test_loss, test_acc = model.evaluate(test_images, test_labels)
-        print('Accuracy:', test_acc)
-        print('Loss: ', test_loss)
+""" model training and evaluation """
+# with mlflow.start_run() as f:  # run_name='run_postgres_r2'experiment_id='7'
+history = model.fit(train_images, train_labels, epochs=epochs, batch_size=batch_size,
+                    validation_data=(test_images, test_labels))
 
-        prediction = model.predict(test_images)
-        predicted_classes = np.argmax(prediction, axis=1)
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Model evaluation """
+test_loss, test_acc = model.evaluate(test_images, test_labels)
+print('Accuracy:', test_acc)
+print('Loss: ', test_loss)
 
-        mlflow.log_param("epochs", epochs)
-        mlflow.log_param("batch_size", batch_size)
-        mlflow.log_metric("test_acc", test_acc)
-        mlflow.log_metric("test_loss", test_loss)
+prediction = model.predict(test_images)
+predicted_classes = np.argmax(prediction, axis=1)
 
-        # mlflow.keras.log_model(model, "my_model_log")
-        # mlflow.keras.save_model(model, 'my_model')
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" Saving MLflow parameters & metrics """
+mlflow.log_param("epochs", epochs)
+mlflow.log_param("batch_size", batch_size)
+mlflow.log_metric("test_acc", test_acc)
+mlflow.log_metric("test_loss", test_loss)
 
-        # with open('predictions.txt', 'w') as f:
-        #     f.write("predicted_classes")
-        #
-        # mlflow.log_artifact('predictions.txt')
+# mlflow.keras.log_model(model, "my_model_log")
+# mlflow.keras.save_model(model, 'my_model')
 
-        # client.create_registered_model(description='first registered model', name=experiment_name)
+# with open('predictions.txt', 'w') as f:
+#     f.write("predicted_classes")
+#
+# mlflow.log_artifact('predictions.txt')
 
-        print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
+# client.create_registered_model(description='first registered model', name=experiment_name)
+
+print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
+# %% ---------------------------------------------------------------------------------------------------------------------
