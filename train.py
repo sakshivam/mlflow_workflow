@@ -14,6 +14,7 @@ import numpy as np
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 
         
     Run from github:
+        export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
         mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
         
 """
@@ -39,6 +40,9 @@ database_name = 'mlflow_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
+
+# TODO run it for cyverse as artifact
+
 
 
 # %% ---------------------------------------------------------------------------------------------------------------------
