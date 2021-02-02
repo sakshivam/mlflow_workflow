@@ -17,8 +17,10 @@ import numpy as np
         export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
         mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
         
-"""
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:Rtn1371369!@128.196.142.27:/home/artinmajdi/mlflow/artifact_store --port 6789
 
+
+"""
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Reading the inputs fed through the command line """
@@ -67,14 +69,14 @@ ExperimentName = {
     'local':      '/exp_final_artifact_local',
     'hpc':        '/exp_final_artifact_hpc',
     'atmosphere': '/exp_final_artifact_atmosphere',
-    'cyverse':    '/exp_final_artifact_cyverse'}
+    'cyverse':    '/exp_final_artifact_cyverse2'}
 
 experiment_name = ExperimentName[artifact_server]
 
 """ Line below should be commented if the experiment is already created
     If kept commented during the first run of a new experiment, the set_experiment 
     will automatically create the new experiment with local artifact storage """
-mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
+# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 mlflow.set_experiment(experiment_name=experiment_name)
 
 """ Loading the optimization parameters aturomatically from keras """
@@ -112,7 +114,7 @@ mlflow.log_param("batch_size", batch_size)
 mlflow.log_metric("test_acc", test_acc)
 mlflow.log_metric("test_loss", test_loss)
 
-# mlflow.keras.log_model(model, "my_model_log")
+mlflow.keras.log_model(model, "my_model_log")
 # mlflow.keras.save_model(model, 'my_model')
 
 
