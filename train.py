@@ -20,7 +20,7 @@ import git
         export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
         mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
         
-        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:Rtn1371369!@128.196.142.27:/home/artinmajdi/mlflow/artifact_store --port 6789
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:<password>!@128.196.142.17:/home/artinmajdi/mlflow/artifact_store --port 6789
 
     Map network drive (CyVerse data storage) on macOS
         1. In Finder, either hit Command+K to bring up “Connect to Server” or click Go > Connect to Server.
@@ -50,12 +50,12 @@ server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
-artifact_server = 'local'
+artifact_server = 'cyverse'
 
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
-    'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.22:/home/artinmajdi/mlflow/artifact_store',
+    'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.17:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store'}
 
 artifact = Artifacts[artifact_server]
