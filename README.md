@@ -298,12 +298,6 @@ Change the postgresql.conf on server machine to listen to all addresses.
     Or
     >> brew services restart postgresql
 
-#### Test the connection by connecting to remote postgres
-
-        128.196.142.23/24 (Atmosphere server)
-        10.208.16.20/24  (Data7 workstation)
-        68.110.78.48     (Home WiFi)
-
     >> psql postgres -h <remote-ip> -p 5432 -U mlflow_developer
 
 #### Setting up postgres
@@ -316,18 +310,27 @@ Go into a specific database & a specific user:
 
     >> psql -d mlflow_db -U mlflow_user
 
-    postgres=#  CREATE DATABASE mlflow_db;
-    postgres=#  CREATE USER mlflow_user WITH ENCRYPTED PASSWORD 'mlflow';
-    postgres=#  GRANT ALL PRIVILEGES ON DATABASE mlflow_db TO mlflow_user;
+    Show Users:                           \du
+    list all databases                    \l
+    Connect to a specific database:       \c database_name;
+    list all tables in current database   \dt   or \dt+ (for more information)
+    Show tables within the database       \d+  
+    Get detailed information on a table:  \d+ table_name
+    Showing information on database name, username, port, socket path    \conninfo
 
-Showing information on database name, username, port, socket path
+    Create a new role with a username and password: CREATE ROLE username NOINHERIT LOGIN PASSWORD password;
 
-    >> postgres=# \conninfo
+    Query all data from a table:                    SELECT * FROM table_name;
 
-    Show Users: \du \
-    Show databases: \list \
-    Show something! \dp
-    Show tables within the database       \d+
+    Create a new database:                          CREATE DATABASE [IF NOT EXISTS] <database_name>;
+    Delete a database permanently:                  DROP DATABASE [IF EXISTS] <database_name>;
+
+    create a user                                   CREATE USER <username> WITH ENCRYPTED PASSWORD <password';
+    delete a user                                   DROP USER <username>
+
+    grant access to a database                      GRANT <privilege_list or ALL>  ON  <table_name> TO  <username>; 
+    grant access to a database                      GRANT <privilege_list or ALL>  ON  DATABASE <database_name> TO  <username>; 
+
 
 
 # iRODS from HPC to CyVerse
