@@ -77,8 +77,8 @@ experiment_name = ExperimentName[artifact_server]
 """ Line below should be commented if the experiment is already created
     If kept commented during the first run of a new experiment, the set_experiment 
     will automatically create the new experiment with local artifact storage """
-mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
-mlflow.set_experiment(experiment_name=experiment_name)
+# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
+# mlflow.set_experiment(experiment_name=experiment_name)
 
 """ Loading the optimization parameters aturomatically from keras """
 mlflow.keras.autolog()
