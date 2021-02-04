@@ -50,7 +50,7 @@ server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
-artifact_server = 'cyverse'
+artifact_server = 'atmosphere'
 
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
