@@ -304,11 +304,8 @@ Change the postgresql.conf on server machine to listen to all addresses.
 
 Go into psql
 
-    >> psql postgres
-
-Go into a specific database & a specific user:
-
-    >> psql -d mlflow_db -U mlflow_user
+    Sign in with the current signed in user (default)  >> psql postgres
+    Go into a specific database & a specific user:     >> psql -d mlflow_db -U mlflow_user
 
     Show Users:                           \du
     list all databases                    \l

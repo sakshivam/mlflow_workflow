@@ -55,12 +55,12 @@ artifact_server = 'atmosphere'
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
-    'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.17:/home/artinmajdi/mlflow/artifact_store',
+    'atmosphere': 'sftp://artinmajdi:<password>@128.196.142.17:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
-# mlflow.set_tracking_uri(server)
+mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 
@@ -113,7 +113,7 @@ predicted_classes = np.argmax(prediction, axis=1)
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Saving MLflow parameters & metrics """
 mlflow.log_param("epochs", epochs)
-mlflow.log_param("batch_size", batch_size)
+mlflow.log_param("bsize", batch_size)
 mlflow.log_metric("accuracy", test_acc)
 mlflow.log_metric("test_loss", test_loss)
 
