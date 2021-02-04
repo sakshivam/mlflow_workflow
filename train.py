@@ -9,7 +9,9 @@ from time import time
 import git
 """ REMOTE postgres server: 
     Step 1 (before running the code): Connecting to remote server through ssh tunneling
-        ssh -L 5000:128.196.142.22:5432 artinmajdi@128.196.142.22
+        ssh -L 5000:128.196.142.17:5432 artinmajdi@128.196.142.17
+
+        ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
 
     Step 2 (after running the code): Connecting to remote postgres server
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 
@@ -19,8 +21,12 @@ import git
         mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
         
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:Rtn1371369!@128.196.142.27:/home/artinmajdi/mlflow/artifact_store --port 6789
-"""
 
+    Map network drive (CyVerse data storage) on macOS
+        1. In Finder, either hit Command+K to bring up “Connect to Server” or click Go > Connect to Server.
+        2. Enter login details and password. https://data.cyverse.org/dav/iplant/home/artinmajdi
+"""
+# 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Reading the inputs fed through the command line """
 epochs, batch_size = reading_terminal_inputs()
@@ -61,10 +67,10 @@ mlflow.set_tracking_uri(server)
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
 ExperimentName = {
-    'local':      '/experiment_artifact_local',
-    'hpc':        '/experiment_artifact_hpc',
-    'atmosphere': '/experiment_artifact_atmosphere',
-    'cyverse':    '/experiment_artifact_cyverse'}
+    'local':      '/EXP_artifact_local',
+    'hpc':        '/EXP_artifact_hpc',
+    'atmosphere': '/EXP_artifact_atmosphere',
+    'cyverse':    '/EXP_artifact_cyverse'}
 
 experiment_name = ExperimentName[artifact_server]
 
