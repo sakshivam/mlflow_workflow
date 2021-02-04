@@ -60,7 +60,7 @@ Artifacts = {
 
 artifact = Artifacts[artifact_server]
 
-mlflow.set_tracking_uri(server)
+# mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
 
