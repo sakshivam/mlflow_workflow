@@ -9,9 +9,14 @@ from time import time
 import git
 """ REMOTE postgres server: 
     Step 1 (before running the code): Connecting to remote server through ssh tunneling
-        ssh -L 5000:128.196.142.17:5432 artinmajdi@128.196.142.17
 
+    Atmosphere:
+        ssh -L 5000:128.196.142.17:5432 artinmajdi@128.196.142.17
         ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
+
+    CyVerse permanent PostgreSQL:
+        ssh artinmajdi@data7-db1.cyverse.org -p 1657 -D 5000
+
 
     Step 2 (after running the code): Connecting to remote postgres server
         mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 
