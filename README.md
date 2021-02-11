@@ -292,6 +292,13 @@ Change the postgresql.conf on server machine to listen to all addresses.
     >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres stop
     >> pg_ctl -D /home/linuxbrew/.linuxbrew/var/postgres start
 
+    >> systemctl stop postgresql
+    >> systemctl start postgresql
+    >> systemctl status postgresql
+
+    /etc/postgresql/9.1/main/pg_hba.conf 
+
+
     MacOS:
     >> pg_ctl -D /usr/local/var/postgres stop
     >> pg_ctl -D /usr/local/var/postgres start

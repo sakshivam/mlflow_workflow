@@ -19,7 +19,7 @@ import git
 
 
     Step 2 (after running the code): Connecting to remote postgres server
-        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789 
+        mlflow ui --backend-store-uri postgresql://james:1234@localhost:5000/mlflow_db --port 6789 
         
     Run from github:
         export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
@@ -44,11 +44,11 @@ epochs, batch_size = reading_terminal_inputs()
             Postgres server: server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' 
             Local:           server = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store" """
 
-username = 'mlflow_developer'
+username = 'artinmajdi' # 'mlflow_developer'
 password = '1234'
 port = '5000'
 ip = 'localhost'
-database_name = 'mlflow_db'
+database_name = 'mnist_db' # 'mlflow_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
@@ -60,8 +60,9 @@ artifact_server = 'atmosphere'
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
-    'atmosphere': 'sftp://artinmajdi:<password>@128.196.142.17:/home/artinmajdi/mlflow/artifact_store',
-    'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store'}
+    'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
+    'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store',
+    'data7_db1':  'sftp://artinmajdi@data7-db1.cyverse.org:1657/home/artinmajdi/mlflow_data/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
@@ -74,16 +75,18 @@ mlflow.set_tracking_uri(server)
 ExperimentName = {
     'local':      '/EXP_artifact_local',
     'hpc':        '/EXP_artifact_hpc',
-    'atmosphere': '/EXP_artifact_atmosphere',
-    'cyverse':    '/EXP_artifact_cyverse'}
+    'atmosphere': '/EXP_artifact_atmosphere_test2',
+    'cyverse':    '/EXP_artifact_cyverse',
+    'data7_db1':  '/EXP_artifact_data7_db1_b'}
 
+# artifact_server = 'local'
 experiment_name = ExperimentName[artifact_server]
 
 """ Line below should be commented if the experiment is already created
     If kept commented during the first run of a new experiment, the set_experiment 
     will automatically create the new experiment with local artifact storage """
-# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
-# mlflow.set_experiment(experiment_name=experiment_name)
+mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
+mlflow.set_experiment(experiment_name=experiment_name)
 
 """ Loading the optimization parameters aturomatically from keras """
 mlflow.keras.autolog()
