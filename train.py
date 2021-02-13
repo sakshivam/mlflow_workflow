@@ -11,7 +11,8 @@ import git
     Step 1 (before running the code): Connecting to remote server through ssh tunneling
 
     Atmosphere:
-        ssh -L 5000:128.196.142.17:5432 artinmajdi@128.196.142.17
+        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org -p 1657 
+
         ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
 
     CyVerse permanent PostgreSQL:
@@ -19,7 +20,7 @@ import git
 
 
     Step 2 (after running the code): Connecting to remote postgres server
-        mlflow ui --backend-store-uri postgresql://james:1234@localhost:5000/mlflow_db --port 6789 
+        mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/mnist_db --port 6789
         
     Run from github:
         export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
@@ -55,29 +56,30 @@ server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
-artifact_server = 'atmosphere'
+artifact_server = 'data7_db1'
 
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
     'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store',
-    'data7_db1':  'sftp://artinmajdi@data7-db1.cyverse.org:1657/home/artinmajdi/mlflow_data/artifact_store'}
+    'data7_db1':  'sftp://artinmajdi@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
-
+import pysftp
+pysftp.Connection()
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
 ExperimentName = {
     'local':      '/EXP_artifact_local',
     'hpc':        '/EXP_artifact_hpc',
-    'atmosphere': '/EXP_artifact_atmosphere_test2',
+    'atmosphere': '/EXP_artifact_atmosphere',
     'cyverse':    '/EXP_artifact_cyverse',
-    'data7_db1':  '/EXP_artifact_data7_db1_b'}
+    'data7_db1':  '/EXP_artifact_data7_db1_7'}
 
 # artifact_server = 'local'
 experiment_name = ExperimentName[artifact_server]
