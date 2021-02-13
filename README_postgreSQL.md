@@ -94,3 +94,7 @@ openssl ciphers -v | awk '{print $2}' | sort | uniq
 
 ## to see the ports used in ubuntu
 netstat -tuanlp
+
+
+## sftp
+sftp -oPort=1657 bartinmajdi@data7-db1.cyverse.org/home/artinmajdi/mlflow_data/artifact_store
