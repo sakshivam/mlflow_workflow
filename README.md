@@ -278,6 +278,7 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 Add the line: host  'all   all  \<client-ip\>/24   trust'
 
     >> Ubuntu: vim /home/linuxbrew/.linuxbrew/var/postgres/pg_hba.conf
+    >> Ubuntu: vim /etc/postgresql/9.1/main/pg_hba.conf 
     >> Macos:  vim /usr/local/var/postgres/pg_hba.conf
 
 Change the postgresql.conf on server machine to listen to all addresses.
@@ -296,7 +297,7 @@ Change the postgresql.conf on server machine to listen to all addresses.
     >> systemctl start postgresql
     >> systemctl status postgresql
 
-    /etc/postgresql/9.1/main/pg_hba.conf 
+    
 
 
     MacOS:

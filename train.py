@@ -45,10 +45,14 @@ epochs, batch_size = reading_terminal_inputs()
             Postgres server: server = f'{dialect_driver}://{username}:{password}@{ip}/{database_name}' 
             Local:           server = "file:/Users/artinmac/Documents/Research/Data7/mlflow/mlrun_store" """
 
+postgres_connection_type = { 'direct':     ('5432', 'data7-db1.cyverse.org'),
+                             'ssh-tunnel': ('5000', 'localhost')
+                            }
+
+port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
+
 username = 'artinmajdi' # 'mlflow_developer'
 password = '1234'
-port = '5000'
-host = 'localhost'
 database_name = 'mnist_db' # 'mlflow_db'
 dialect_driver = 'postgresql'
 
@@ -61,9 +65,9 @@ artifact_server = 'data7_db1'
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
-    'atmosphere': 'sftp://artinmajdi:Rtn1371369!@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
+    'atmosphere': 'sftp://artinmajdi:ARtin2021!@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store',
-    'data7_db1':  'sftp://artinmajdi@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
+    'data7_db1':  'sftp://artinmajdi:ARtin2021!@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
@@ -77,7 +81,7 @@ ExperimentName = {
     'hpc':        '/EXP_artifact_hpc',
     'atmosphere': '/EXP_artifact_atmosphere',
     'cyverse':    '/EXP_artifact_cyverse',
-    'data7_db1':  '/EXP_artifact_data7_db1_8'}
+    'data7_db1':  '/EXP_artifact_data7_db1_9'}
 
 # artifact_server = 'local'
 experiment_name = ExperimentName[artifact_server]
