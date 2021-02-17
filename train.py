@@ -48,11 +48,11 @@ epochs, batch_size = reading_terminal_inputs()
 username = 'artinmajdi' # 'mlflow_developer'
 password = '1234'
 port = '5000'
-ip = 'localhost'
+host = 'localhost'
 database_name = 'mnist_db' # 'mlflow_db'
 dialect_driver = 'postgresql'
 
-server = f'{dialect_driver}://{username}:{password}@{ip}:{port}/{database_name}'
+server = f'{dialect_driver}://{username}:{password}@{host}:{port}/{database_name}'
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Setting up the artifact server """ 
@@ -70,8 +70,6 @@ artifact = Artifacts[artifact_server]
 mlflow.set_tracking_uri(server)
 # mlflow.set_registry_uri(server)
 
-import pysftp
-pysftp.Connection()
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
 ExperimentName = {
@@ -79,7 +77,7 @@ ExperimentName = {
     'hpc':        '/EXP_artifact_hpc',
     'atmosphere': '/EXP_artifact_atmosphere',
     'cyverse':    '/EXP_artifact_cyverse',
-    'data7_db1':  '/EXP_artifact_data7_db1_7'}
+    'data7_db1':  '/EXP_artifact_data7_db1_8'}
 
 # artifact_server = 'local'
 experiment_name = ExperimentName[artifact_server]
