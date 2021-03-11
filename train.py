@@ -10,13 +10,17 @@ import git
 """ REMOTE postgres server: 
     Step 1 (before running the code): Connecting to remote server through ssh tunneling
 
+    to force asking for password: 
+        ssh  -o PreferredAuthentications=password -o PubkeyAuthentication=no artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
+    password = temp_data7
+
     Atmosphere:
-        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org -p 1657 
+        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
 
         ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
 
     CyVerse permanent PostgreSQL:
-        ssh artinmajdi@data7-db1.cyverse.org -p 1657 -D 5000
+        ssh artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
 
 
     Step 2 (after running the code): Connecting to remote postgres server
@@ -53,7 +57,7 @@ port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
 username = 'artinmajdi' # 'mlflow_developer'
 password = '1234'
-database_name = 'mnist_db' # 'mlflow_db'
+database_name = 'data7_tbot_db' # 'data7_lives_db' # 'data7_tbot_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{host}:{port}/{database_name}'
@@ -65,9 +69,9 @@ artifact_server = 'data7_db1'
 Artifacts = {
     'local':      "file:/Users/artinmac/Documents/Research/Data7/mlflow/artifact_store",
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
-    'atmosphere': 'sftp://artinmajdi:ARtin2021!@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
+    'atmosphere': 'sftp://artinmajdi:{password}@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store',
-    'data7_db1':  'sftp://artinmajdi:ARtin2021!@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
+    'data7_db1':  'sftp://artinmajdi:temp_data7@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
@@ -81,7 +85,12 @@ ExperimentName = {
     'hpc':        '/EXP_artifact_hpc',
     'atmosphere': '/EXP_artifact_atmosphere',
     'cyverse':    '/EXP_artifact_cyverse',
-    'data7_db1':  '/EXP_artifact_data7_db1_9'}
+    'data7_db1':  f'/EXP_{username}'}
+
+print('----------------------')
+print(ExperimentName[artifact_server])
+print('----------------------')
+
 
 # artifact_server = 'local'
 experiment_name = ExperimentName[artifact_server]
