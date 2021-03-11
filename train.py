@@ -27,7 +27,7 @@ postgres_connection_type = { 'direct':     ('5432', 'data7-db1.cyverse.org'),
 port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
 
-username = "your-first-name" # e.g., nirav, nick, ...
+username = "your-first-name" # e.g., nirav, hagan, nick, ...
 password = '1234'
 database_name = "project-name" # 'data7_lives_db' or 'data7_tbot_db'
 dialect_driver = 'postgresql'
