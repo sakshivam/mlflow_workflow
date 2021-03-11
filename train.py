@@ -7,36 +7,7 @@ import mlflow
 import numpy as np
 from time import time
 import git
-""" REMOTE postgres server: 
-    Step 1 (before running the code): Connecting to remote server through ssh tunneling
-
-    to force asking for password: 
-        ssh  -o PreferredAuthentications=password -o PubkeyAuthentication=no artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
-    password = temp_data7
-
-    Atmosphere:
-        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
-
-        ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
-
-    CyVerse permanent PostgreSQL:
-        ssh artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
-
-
-    Step 2 (after running the code): Connecting to remote postgres server
-        mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/mnist_db --port 6789
-        
-    Run from github:
-        export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
-        mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
-        
-        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:<password>!@128.196.142.17:/home/artinmajdi/mlflow/artifact_store --port 6789
-
-    Map network drive (CyVerse data storage) on macOS
-        1. In Finder, either hit Command+K to bring up “Connect to Server” or click Go > Connect to Server.
-        2. Enter login details and password. https://data.cyverse.org/dav/iplant/home/artinmajdi
-"""
-# 
+ 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Reading the inputs fed through the command line """
 epochs, batch_size = reading_terminal_inputs()
@@ -55,9 +26,10 @@ postgres_connection_type = { 'direct':     ('5432', 'data7-db1.cyverse.org'),
 
 port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
-username = 'artinmajdi' # 'mlflow_developer'
+
+username = "your-first-name" # e.g., nirav, nick, ...
 password = '1234'
-database_name = 'data7_tbot_db' # 'data7_lives_db' # 'data7_tbot_db'
+database_name = "project-name" # 'data7_lives_db' or 'data7_tbot_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{host}:{port}/{database_name}'

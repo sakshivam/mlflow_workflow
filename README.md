@@ -378,3 +378,35 @@ Create a story (one PI, two developers, one final-user)
 ## see ports that are listening
 ### Mac
         sudo lsof -i -n -P | grep TCP
+
+
+
+## from train.py
+ REMOTE postgres server: 
+    Step 1 (before running the code): Connecting to remote server through ssh tunneling
+
+    to force asking for password: 
+        ssh  -o PreferredAuthentications=password -o PubkeyAuthentication=no artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
+    password = temp_data7
+
+    Atmosphere:
+        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
+
+        ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
+
+    CyVerse permanent PostgreSQL:
+        ssh artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
+
+
+    Step 2 (after running the code): Connecting to remote postgres server
+        mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/mnist_db --port 6789
+        
+    Run from github:
+        export MLFLOW_TRACKING_URI=http://127.0.0.1:{port} # port: 6789 or 5000
+        mlflow run --no-conda --experiment-id experiment_id -P epoch=2 https://github.com/artinmajdi/mlflow_workflow.git -v main
+        
+        mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db  --default-artifact-root sftp://artinmajdi:<password>!@128.196.142.17:/home/artinmajdi/mlflow/artifact_store --port 6789
+
+    Map network drive (CyVerse data storage) on macOS
+        1. In Finder, either hit Command+K to bring up “Connect to Server” or click Go > Connect to Server.
+        2. Enter login details and password. https://data.cyverse.org/dav/iplant/home/artinmajdi
