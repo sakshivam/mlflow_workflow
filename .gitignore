@@ -16,6 +16,7 @@ db.sqlite3-journal
 .ipynb_checkpoints
 .python-version
 *.code-workspace
+.vscode/
 
 
 # IPython
