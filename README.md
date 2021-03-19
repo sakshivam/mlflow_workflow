@@ -21,12 +21,16 @@
 ## 1.2.Remote ssh to atmosphere server
     ssh -L 5000:<ip>:5432 <username>@<ip>
     ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
+    ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org
+
 
 
 ## 1.3.Viewing the results in mlflow server
 
 Remote postgres server:
     mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789
+    mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/phyto_oracle_db --port 6789
+
 
 Local postgres server:
     mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5432/mlflow_db --port 6789

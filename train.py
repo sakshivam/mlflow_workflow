@@ -27,9 +27,9 @@ postgres_connection_type = { 'direct':     ('5432', 'data7-db1.cyverse.org'),
 port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
 
-username = "your-first-name" # e.g., nirav, hagan, nick, ...
+username = "ariyanzarei" # e.g., nirav, hagan, nick, ...
 password = '1234'
-database_name = "project-name" # 'data7_lives_db' or 'data7_tbot_db'
+database_name = 'phyto_oracle_db' # "project-name" # 'data7_lives_db' or 'data7_tbot_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{host}:{port}/{database_name}'
@@ -70,7 +70,7 @@ experiment_name = ExperimentName[artifact_server]
 """ Line below should be commented if the experiment is already created
     If kept commented during the first run of a new experiment, the set_experiment 
     will automatically create the new experiment with local artifact storage """
-mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
+# mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 mlflow.set_experiment(experiment_name=experiment_name)
 
 """ Loading the optimization parameters aturomatically from keras """
@@ -109,6 +109,9 @@ mlflow.log_param("epochs", epochs)
 mlflow.log_param("bsize", batch_size)
 mlflow.log_metric("accuracy", test_acc)
 mlflow.log_metric("test_loss", test_loss)
+
+mlflow.set_tag('User',username)
+
 
 # mlflow.keras.log_model(model, "my_model_log")
 # mlflow.keras.save_model(model, 'my_model')
