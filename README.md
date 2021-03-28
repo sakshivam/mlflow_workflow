@@ -19,9 +19,10 @@
     pip install pysftp
 
 ## 1.2.Remote ssh to atmosphere server
-    ssh -L 5000:<ip>:5432 <username>@<ip>
-    ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
-    ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org
+    ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
+    ssh artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
+
+    ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
 
 
 
@@ -51,7 +52,6 @@ Local postgres server:
 ### 1.5.1.UI with postgres:
     REMOTE postgres server:
         # Step 1: Connecting to remote server through ssh tunneling
-          ssh -L 5000:128.196.142.27:5432 artinmajdi@128.196.142.27
 
         # Step 2: Connecting to remote postgres server
           mlflow ui --backend-store-uri postgresql://mlflow_developer:1234@localhost:5000/mlflow_db --port 6789
@@ -389,19 +389,6 @@ Create a story (one PI, two developers, one final-user)
  REMOTE postgres server: 
     Step 1 (before running the code): Connecting to remote server through ssh tunneling
 
-    to force asking for password: 
-        ssh  -o PreferredAuthentications=password -o PubkeyAuthentication=no artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
-    password = temp_data7
-
-    Atmosphere:
-        ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
-
-        ssh -L <local-port,5000>:<remote-ip>:<postgres-port,5432> <usernname>@<remote-ip>
-
-    CyVerse permanent PostgreSQL:
-        ssh artinmajdi@data7-db1.cyverse.org -p 22 -D 5000
-
-
     Step 2 (after running the code): Connecting to remote postgres server
         mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/mnist_db --port 6789
         
@@ -423,10 +410,7 @@ Create a story (one PI, two developers, one final-user)
 
 ## Sign-in
 Sign in with the current signed in user (default) 
-    
-    >> ssh artinmajdi@data7-db1.cyverse.org -p 1657
-    >> ssh artinmajdi@128.196.65.115 -p 1657
-    
+
     >> psql -U postgres
     >> password: 1234
 
