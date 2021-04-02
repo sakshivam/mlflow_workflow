@@ -7,6 +7,10 @@
 
     conda env create -f requirements.yaml -n env_name
 
+    or 
+
+    docker pull artinmajdi/miniconda-cuda-tensorflow:latest
+
 #### Installing manually
     conda create -n env_name
     conda activate env_name
@@ -268,14 +272,9 @@ Source: https://www.thegeekstuff.com/2014/02/enable-remote-postgresql-connection
 
     Ubuntu:
     >> ip addr show
-    >> 128.196.142.23/24 (Atmosphere server)
-    >> 150.135.165.137/24   (Home WiFi)
-    >> 10.138.88.132/24     (Home WiFi)
-    >> 150.135.165.66/24   (Data7 workstation)
 
     MacOS:
     >> ipconfig getifaddr en0
-    >> 68.110.78.48/24   (My MacOS)
 
 #### Set up server to listen to clients (postgresql.conf & pg_hba.conf)
 
