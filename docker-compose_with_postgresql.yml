@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+
+  db:
+    image: postgres
+    volumes: 
+      - ./data/db:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_DB=chest_db
+      - POSTGRES_USER=artinmajdi
+      - POSTGRES_PASSWORD=1234
+
+  code:
+    image: mlflow_light
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5000:5000
+      - 6789:6789
+
+    command: mlflow ui --backend-store-uri postgresql://artinmajdi:1234@host.docker.internal:5000/chest_db --port 6789
+
+    volumes: 
+      - .:/code
+
+    depends_on: 
+      - db
