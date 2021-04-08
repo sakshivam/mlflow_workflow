@@ -13,6 +13,9 @@ import git
 epochs, batch_size = reading_terminal_inputs()
 # epochs, batch_size = 3,32
 
+# %% ---------------------------------------------------------------------------------------------------------------------
+""" ssh tunneling in the background """
+os.system('ssh -N -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org & ')
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ MLflow settings: 
