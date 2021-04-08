@@ -30,7 +30,7 @@ postgres_connection_type = { 'direct':     ('5432', 'data7-db1.cyverse.org'),
 port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
 
-username = "ariyanzarei"
+username = "artinmajdi" # e.g., nirav, hagan, nick, ...
 password = '1234'
 database_name = 'phyto_oracle_db'
 dialect_driver = 'postgresql'
@@ -46,12 +46,12 @@ Artifacts = {
     'hpc':        'sftp://mohammadsmajdi@filexfer.hpc.arizona.edu:/home/u29/mohammadsmajdi/projects/mlflow/artifact_store',
     'atmosphere': 'sftp://artinmajdi:{password}@128.196.142.4:/home/artinmajdi/mlflow/artifact_store',
     'cyverse':    'file:/Volumes/artinmajdi/projects/mlflow/artifact_store',
-    'data7_db1':  'sftp://artinmajdi:temp_data7@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
+    'data7_db1':  'sftp://artinmajdi:temp2_data7_b@data7-db1.cyverse.org:/home/artinmajdi/mlflow_data/artifact_store'}
 
 artifact = Artifacts[artifact_server]
 
 mlflow.set_tracking_uri(server)
-# mlflow.set_registry_uri(server)
+
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
@@ -62,6 +62,7 @@ experiment_name = '/experiment_name'
     will automatically create the new experiment with local artifact storage """
 mlflow.create_experiment(name=experiment_name, artifact_location=artifact)
 mlflow.set_experiment(experiment_name=experiment_name)
+
 
 """ Loading the optimization parameters aturomatically from keras """
 mlflow.keras.autolog()
