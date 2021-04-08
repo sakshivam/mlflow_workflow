@@ -29,7 +29,7 @@ port, host = postgres_connection_type['ssh-tunnel'] # 'direct' , 'ssh-tunnel'
 
 username = "artinmajdi" # e.g., nirav, hagan, nick, ...
 password = '1234'
-database_name = 'phyto_oracle_db' # "project-name" # 'data7_lives_db' or 'data7_tbot_db'
+database_name = 'phyto_oracle_db'
 dialect_driver = 'postgresql'
 
 server = f'{dialect_driver}://{username}:{password}@{host}:{port}/{database_name}'
@@ -52,8 +52,7 @@ mlflow.set_tracking_uri(server)
 
 # %% ---------------------------------------------------------------------------------------------------------------------
 """ Creating/Setting the experiment """
-experiment_name = 'test'
-
+experiment_name = '/experiment_name'
 
 """ Line below should be commented if the experiment is already created
     If kept commented during the first run of a new experiment, the set_experiment 

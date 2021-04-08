@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  code:
+    image: mlflow_light
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+
+    network_mode: host
+    command: mlflow ui --backend-store-uri postgresql://artinmajdi:1234@localhost:5000/chest_db --port 6789
+    volumes: 
+      - .:/code
