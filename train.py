@@ -52,6 +52,8 @@ def mlflow_settings():
 server, artifact = mlflow_settings()
 mlflow.set_tracking_uri(server)
 
+
+""" creating a ssh-tunnel to server in the background """
 command = 'ssh -N -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org &'
 ssh_session = subprocess.Popen('exec ' + command, stdout=subprocess.PIPE, shell=True)
 
