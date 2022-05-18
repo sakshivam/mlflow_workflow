@@ -1,34 +1,46 @@
-# 1.Installation
-
-## 1.1.Installing the package requirements
-
-### Automatically from requirements.yaml file
+# Installation
 
 ```bash
-    >> conda activate env_name
-    >> conda env create -f requirements.yaml -n env_name
-
-    or 
-
-    >> docker pull artinmajdi/miniconda-cuda-tensorflow:latest
-```
-
-### Installing manually
-
-```bash
-    >> conda create -n env_name
-    >> conda activate env_name
-
-    >> conda install -c anaconda keras tensorflow-gpu
-    >> conda install -c anaconda numpy pandas matplotlib 
+    >> conda create -n <env_name>
+    >> conda activate <env_name>
     >> conda install -c anaconda psycopg2 git
     >> conda install -c anaconda notebook
     >> pip install mlflow==1.12.1
     >> pip install pysftp
 ```
 
-## 1.2.Remote ssh to atmosphere server
+# Remote ssh to atmosphere server
 
+    > ssh -L -N {LOCAL_PORT}:localhost:{SSH_PORT} -i {SSH_KEY} {SSH_USER}@{SSH_HOST} &
+
+
+    SSH_HOST: str   <=>   Hostname or IP address of the machine to tunnel to.
+    SSH_PORT: int   <=>   Port on the remote machine to tunnel to.
+    SSH_USER: str   <=>   Username for SSH authentication.
+    SSH_KEY : str   <=>   Path to the SSH private key file.
+    LOCAL_PORT : int, optional   ->   Local port to bind to.
+
+
+Returns
+-------
+tunnel : SSHClient
+    SSH client used to create the tunnel.
+        
+            
+Command (in CLI)
+-------
+    
+    
+Saving the ssh credentials (in CLI)
+--------------------------
+    > ssh-keygen -t rsa
+    > ssh-copy-id -i {SSH_KEY}  {SSH_USER}@{SSH_HOST}
+
+
+Killing the ssh-tunnel (in SCRIPT)
+----------------------
+    > ssh_session.kill()
+    
 ```bash
     >> ssh -L 5000:localhost:5432 artinmajdi@data7-db1.cyverse.org # -p 1657
 
@@ -435,6 +447,7 @@ Go into psql
 ```
 
 ## Accessing CyVerse profile/data through web browser
+
 <https://data.cyverse.org/dav/iplant/home/artinmajdi/>
 
 ## IMPORTANT: Reading data through iRODS from within python
@@ -448,14 +461,6 @@ To be able to have datasets in one place and run the HPC instances from that pla
 ```bash
     >> docker pull nvidia/cuda
 ```
-
-# TODO
-
-Create a story (one PI, two developers, one final-user)
-
-- PI can view and edit the databases
-- Developers can collaborate using authentication tokens (instaed of HPC, use CyVerse for artifact storage, and then use authentication)
-- Final-users can curl into a served-model feeding their input data and get the results
 
 ## see ports that are listening
 
